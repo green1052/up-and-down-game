@@ -22,8 +22,8 @@
         function GameStart() {
             RemoveElement();
 
-            const min = Number(document.getElementById("min").value);
-            const max = Number(document.getElementById("max").value);
+            const min = parseInt(document.getElementById("min").value);
+            const max = parseInt(document.getElementById("max").value);
 
             if (!min || !max)
                 return alert("최소 값 혹은 최대 값이 없습니다.");
