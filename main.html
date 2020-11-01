@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>업다운 게임</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+        div {
+            text-align: center
+        }
+    </style>
+    <script crossorigin="anonymous"
+            integrity="sha512-6SHRAV8GhJ+3WvGPKQNsBpLj7J9QF9JFwH7nPSRLtH/OqFrlXRd54Z+QDgw7xj1f7dV8c50sKhZYr/xGPlMoiw=="
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.5.1/math.min.js"></script>
+    <script type="text/javascript">
+        function GameStart() {
+            RemoveElement();
+
+            const min = Number(document.getElementById("min").value);
+            const max = Number(document.getElementById("max").value);
+
+            if (!min || !max)
+                return alert("최소 값 혹은 최대 값이 없습니다.");
+
+            if (min === max)
+                return alert("최소 값과 최대 값이 똑같습니다.");
+
+            if (min > max)
+                return alert("최소 값이 최대 값보다 큽니다.");
+
+            AddElement("h1", "입력창");
+
+            const random = math.randomInt(min, max + 1);
+
+            const element = document.createElement("input");
+            element.id = "gameLog";
+            element.placeholder = "숫자를 입력하세요";
+            element.type = "number";
+            element.addEventListener("keydown", function KeyInput(event) {
+                if (event.keyCode !== 13)
+                    return;
+
+                const input = Number(element.value);
+
+                if (random === input) {
+                    alert("정답입니다.");
+                    RemoveElement();
+                } else if (random < input)
+                    alert(`${input}보다 작습니다.`);
+                else if (random > input)
+                    alert(`${input}보다 큽니다.`);
+
+            }, false);
+
+            document.getElementById("gameText").appendChild(element);
+
+            AddElement("h3", "엔터를 눌러 값을 맞춰보세요");
+        }
+
+        function AddElement(type, text) {
+            const element = document.createElement(type);
+            element.id = "gameLog";
+            element.innerHTML = text;
+
+            document.getElementById("gameText").appendChild(element);
+        }
+
+        function RemoveElement() {
+            document.querySelectorAll("#gameLog").forEach(query => {
+                query.remove();
+            });
+        }
+    </script>
+</head>
+<body>
+<div>
+    <br>
+    <br>
+    <h1>업다운 게임</h1>
+    <br>
+    <h4>랜덤 값 설정</h4>
+    <label>
+        <input id="min" placeholder="최소 값" type="number">
+        ~
+        <input id="max" placeholder="최대 값" type="number">
+    </label>
+    <br>
+    <br>
+    <button onclick="GameStart()" type="button">시작</button>
+</div>
+<br>
+<br>
+<div id="gameText"></div>
+<div>
+    <a href="https://github.com/green1052/up-and-down-game" target="_blank">개발자: green1052(깃허브로 가기)</a>
+</div>
+</body>
+</html>
